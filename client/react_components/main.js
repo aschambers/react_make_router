@@ -1,72 +1,73 @@
-var React = require('react')
-var ReactDOM = require('react-dom')
+import React from 'react'
+import { render } from 'react-dom'
+import App from '../react_components/App'
 
-// List variable
-var List = (
-  <ul>
-    <li>Item 1</li>
-    <li>Item 2</li>
-    <li>Item 3</li>
-  </ul>
-)
+render(<App/>, document.getElementById('app'))
 
-// Image variable
-var Image = <img src='http://vignette1.wikia.nocookie.net/dragonquest/images/8/8f/DQMJ2_-_Fluffy.png/revision/latest?cb=20160318182008'/>
+// var React = require('react');
+// var ReactDOM = require('react-dom');
+// var ReactRouter = require('react-router');
+// var Router = ReactRouter.Router,
+//     Route = ReactRouter.Route,
+//     hashHistory = ReactRouter.hashHistory
 
-// Form variable
-var Form = (
-  <form>
-    Name: <input type='text'/>
-    <input type='submit' value='Submit'/>
-  </form>
-)
+// console.log(ReactRouter);
 
-// use variable links to store List, Image, and Form variables for routing.
-var links = {
-  home: "",
-  list: List,
-  image: Image,
-  form: Form
-}
+// // This file holds our JSON array of turtles
+// // may need json loader for webpack
+// var data = require('./turtles.json')
 
-var App = React.createClass({
-    render: function(){
-    	// We have access to our current location as a prop! (this.props.route)
+// var NinjaList = React.createClass({
+//   render: function(){
+//     var ninjas = this.props.turtles.map(function(turtle, index){
+//       return (
+//         <li key={index}>
+//           <a href="#">{turtle.name}</a>
+//         </li>
+//       )
+//     })
+//     return (
+//       <ul>
+//         {ninjas}
+//       </ul>
+//     )
+//   }
+// });
 
-        // FIND THE CORRECT LINKS
-        // Iterate through our object keys to push the links we want into an array
-        var linkArray = []
-        for(link in links){
-          if (this.props.route !== link) { linkArray.push(link); }
-        }
+// var NinjaDescription = React.createClass({
+//   render: function(){
+//     return(
+//       <div>
+//         <h1>Ninja Name</h1>
+//         <p>Ninja Description</p>
+//       </div>
+//     )
+//   }
+// });
 
-        // Map over the array and wrap each link value with JSX
-        linkArray = linkArray.map(function(link){
-          return <a key={link} href={"#"+link}>The {link.charAt(0).toUpperCase() + link.slice(1)}</a>
-        });
+// var NinjaComponent = React.createClass({
+//     render: function (){
+//         return (
+//           <div>
+//             <h1>Greetings Ninja!</h1>
+//             <h2>Click on a ninja for more information</h2>
+//             <NinjaList turtles={this.props.data}/>
+//             <NinjaDescription />
+//           </div>
+//         )
+//     }
+// });
 
-        // Use this.props.route to find the content that should be displayed.
-        var content = links[this.props.route];
-        return (
-          <div>
-            <header>
-              <h1>Ninja Router</h1>
-              {linkArray}
-          	</header>
-            <div className='content-container'>
-              <h2>Your location: {this.props.route}</h2>
-              {content}
-            </div>
-          </div>
-        )
-    }
-})
+// ReactDOM.render(<NinjaComponent data={data}/>, document.getElementById('app'));
 
-function routingApp(){
-	ReactDOM.render(<App route={location.hash.substr(1)}/>, document.getElementById('app'))
-}
+// var App = React.createClass({
+//   render: function(){
+//     return (
+//       <Router history={hashHistory}>
+//         <Route path='/' component={NinjaComponent} data={this.props.data}/>
+//       </Router>
+//     )
+//   }
+// })
 
-// Add a listener to the 'haschange' event, and render our content when that happens
-window.addEventListener('hashchange', routingApp);
-
-routingApp();
+// ReactDOM.render(<App data={data}/>, document.getElementById('app'))

@@ -44,113 +44,89 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var React = __webpack_require__(1);
-	var ReactDOM = __webpack_require__(158);
+	'use strict';
 
-	// List variable
-	var List = React.createElement(
-	  'ul',
-	  null,
-	  React.createElement(
-	    'li',
-	    null,
-	    'Item 1'
-	  ),
-	  React.createElement(
-	    'li',
-	    null,
-	    'Item 2'
-	  ),
-	  React.createElement(
-	    'li',
-	    null,
-	    'Item 3'
-	  )
-	);
+	var _react = __webpack_require__(1);
 
-	// Image variable
-	var Image = React.createElement('img', { src: 'http://vignette1.wikia.nocookie.net/dragonquest/images/8/8f/DQMJ2_-_Fluffy.png/revision/latest?cb=20160318182008' });
+	var _react2 = _interopRequireDefault(_react);
 
-	// Form variable
-	var Form = React.createElement(
-	  'form',
-	  null,
-	  'Name: ',
-	  React.createElement('input', { type: 'text' }),
-	  React.createElement('input', { type: 'submit', value: 'Submit' })
-	);
+	var _reactDom = __webpack_require__(158);
 
-	// use variable links to store List, Image, and Form variables for routing.
-	var links = {
-	  home: "",
-	  list: List,
-	  image: Image,
-	  form: Form
-	};
+	var _App = __webpack_require__(159);
 
-	var App = React.createClass({
-	  displayName: 'App',
+	var _App2 = _interopRequireDefault(_App);
 
-	  render: function () {
-	    // We have access to our current location as a prop! (this.props.route)
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	    // FIND THE CORRECT LINKS
-	    // Iterate through our object keys to push the links we want into an array
-	    var linkArray = [];
-	    for (link in links) {
-	      if (this.props.route !== link) {
-	        linkArray.push(link);
-	      }
-	    }
+	(0, _reactDom.render)(_react2.default.createElement(_App2.default, null), document.getElementById('app'));
 
-	    // Map over the array and wrap each link value with JSX
-	    linkArray = linkArray.map(function (link) {
-	      return React.createElement(
-	        'a',
-	        { key: link, href: "#" + link },
-	        'The ',
-	        link.charAt(0).toUpperCase() + link.slice(1)
-	      );
-	    });
+	// var React = require('react');
+	// var ReactDOM = require('react-dom');
+	// var ReactRouter = require('react-router');
+	// var Router = ReactRouter.Router,
+	//     Route = ReactRouter.Route,
+	//     hashHistory = ReactRouter.hashHistory
 
-	    // Use this.props.route to find the content that should be displayed.
-	    var content = links[this.props.route];
-	    return React.createElement(
-	      'div',
-	      null,
-	      React.createElement(
-	        'header',
-	        null,
-	        React.createElement(
-	          'h1',
-	          null,
-	          'Ninja Router'
-	        ),
-	        linkArray
-	      ),
-	      React.createElement(
-	        'div',
-	        { className: 'content-container' },
-	        React.createElement(
-	          'h2',
-	          null,
-	          'Your location: ',
-	          this.props.route
-	        ),
-	        content
-	      )
-	    );
-	  }
-	});
+	// console.log(ReactRouter);
 
-	function routingApp() {
-	  ReactDOM.render(React.createElement(App, { route: location.hash.substr(1) }), document.getElementById('app'));
-	}
+	// // This file holds our JSON array of turtles
+	// // may need json loader for webpack
+	// var data = require('./turtles.json')
 
-	// Add a listener to the 'haschange' event, and render our content when that happens
-	window.addEventListener('hashchange', routingApp);
+	// var NinjaList = React.createClass({
+	//   render: function(){
+	//     var ninjas = this.props.turtles.map(function(turtle, index){
+	//       return (
+	//         <li key={index}>
+	//           <a href="#">{turtle.name}</a>
+	//         </li>
+	//       )
+	//     })
+	//     return (
+	//       <ul>
+	//         {ninjas}
+	//       </ul>
+	//     )
+	//   }
+	// });
 
-	routingApp();
+	// var NinjaDescription = React.createClass({
+	//   render: function(){
+	//     return(
+	//       <div>
+	//         <h1>Ninja Name</h1>
+	//         <p>Ninja Description</p>
+	//       </div>
+	//     )
+	//   }
+	// });
+
+	// var NinjaComponent = React.createClass({
+	//     render: function (){
+	//         return (
+	//           <div>
+	//             <h1>Greetings Ninja!</h1>
+	//             <h2>Click on a ninja for more information</h2>
+	//             <NinjaList turtles={this.props.data}/>
+	//             <NinjaDescription />
+	//           </div>
+	//         )
+	//     }
+	// });
+
+	// ReactDOM.render(<NinjaComponent data={data}/>, document.getElementById('app'));
+
+	// var App = React.createClass({
+	//   render: function(){
+	//     return (
+	//       <Router history={hashHistory}>
+	//         <Route path='/' component={NinjaComponent} data={this.props.data}/>
+	//       </Router>
+	//     )
+	//   }
+	// })
+
+	// ReactDOM.render(<App data={data}/>, document.getElementById('app'))
 
 /***/ },
 /* 1 */
@@ -319,35 +295,83 @@
 	var cachedSetTimeout;
 	var cachedClearTimeout;
 
+	function defaultSetTimout() {
+	    throw new Error('setTimeout has not been defined');
+	}
+	function defaultClearTimeout () {
+	    throw new Error('clearTimeout has not been defined');
+	}
 	(function () {
 	    try {
-	        cachedSetTimeout = setTimeout;
-	    } catch (e) {
-	        cachedSetTimeout = function () {
-	            throw new Error('setTimeout is not defined');
+	        if (typeof setTimeout === 'function') {
+	            cachedSetTimeout = setTimeout;
+	        } else {
+	            cachedSetTimeout = defaultSetTimout;
 	        }
+	    } catch (e) {
+	        cachedSetTimeout = defaultSetTimout;
 	    }
 	    try {
-	        cachedClearTimeout = clearTimeout;
-	    } catch (e) {
-	        cachedClearTimeout = function () {
-	            throw new Error('clearTimeout is not defined');
+	        if (typeof clearTimeout === 'function') {
+	            cachedClearTimeout = clearTimeout;
+	        } else {
+	            cachedClearTimeout = defaultClearTimeout;
 	        }
+	    } catch (e) {
+	        cachedClearTimeout = defaultClearTimeout;
 	    }
 	} ())
 	function runTimeout(fun) {
 	    if (cachedSetTimeout === setTimeout) {
+	        //normal enviroments in sane situations
 	        return setTimeout(fun, 0);
-	    } else {
-	        return cachedSetTimeout.call(null, fun, 0);
 	    }
+	    // if setTimeout wasn't available but was latter defined
+	    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
+	        cachedSetTimeout = setTimeout;
+	        return setTimeout(fun, 0);
+	    }
+	    try {
+	        // when when somebody has screwed with setTimeout but no I.E. maddness
+	        return cachedSetTimeout(fun, 0);
+	    } catch(e){
+	        try {
+	            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
+	            return cachedSetTimeout.call(null, fun, 0);
+	        } catch(e){
+	            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
+	            return cachedSetTimeout.call(this, fun, 0);
+	        }
+	    }
+
+
 	}
 	function runClearTimeout(marker) {
 	    if (cachedClearTimeout === clearTimeout) {
-	        clearTimeout(marker);
-	    } else {
-	        cachedClearTimeout.call(null, marker);
+	        //normal enviroments in sane situations
+	        return clearTimeout(marker);
 	    }
+	    // if clearTimeout wasn't available but was latter defined
+	    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
+	        cachedClearTimeout = clearTimeout;
+	        return clearTimeout(marker);
+	    }
+	    try {
+	        // when when somebody has screwed with setTimeout but no I.E. maddness
+	        return cachedClearTimeout(marker);
+	    } catch (e){
+	        try {
+	            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
+	            return cachedClearTimeout.call(null, marker);
+	        } catch (e){
+	            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
+	            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
+	            return cachedClearTimeout.call(this, marker);
+	        }
+	    }
+
+
+
 	}
 	var queue = [];
 	var draining = false;
@@ -19797,6 +19821,33 @@
 
 	module.exports = __webpack_require__(3);
 
+
+/***/ },
+/* 159 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = _react2.default.createClass({
+	  displayName: 'App',
+	  render: function render() {
+	    return _react2.default.createElement(
+	      'div',
+	      null,
+	      'Hello, React Router!'
+	    );
+	  }
+	});
 
 /***/ }
 /******/ ]);
